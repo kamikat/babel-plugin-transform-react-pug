@@ -5,6 +5,7 @@ import {visitExpression} from './visitors';
 import {getInterpolatedTemplate} from './utils/interpolation';
 import {buildJSXFragment} from './utils/jsx';
 import {setBabelTypes} from './lib/babel-types';
+import {parseTemplate} from './utils/parse-template';
 
 export default function(babel) {
   const {types: t} = babel;
@@ -36,7 +37,7 @@ export default function(babel) {
             template = quasis[0].value.raw;
           }
 
-          let src = template.replace(/\\n/g, '\n').split('\n');
+          let src = parseTemplate(template).split('\n');
 
           const minIndent = common(
             src
